@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Architects Daughter', cursive;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: rgba(237, 183, 45, 0.694);
+  color:rgb(8, 8, 8);
+}
+
+h1 {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 45px;
+  color: rgb(12, 11, 10);
+}
+
+h3 {
+  font-size: 25px;
+}
+
+header {
+  width: 900px;
+  margin: 2rem auto 1rem;
+}
+
+main {
+  width: 900px;
+  margin: 0 auto 2rem;
+}
+
+ul li {
+  line-height: 160%;
+}
+
+/* -- VOTING BLOCK -- */
+
+section {
+  background-color: rgba(237, 182, 44, 0.886);
+  border-style: dotted;
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+section img {
+  width: 30%;
+  margin: 1rem;
+  border: 5px solid transparent;
+}
+
+section img:hover {
+  border: 5px dotted rgb(40, 36, 30);
+  cursor: pointer;
+}
+
+/* -- button -- */
+
+section + div {
+  background-color: rgba(237, 182, 44, 0.886);
+  color: rgb(36, 18, 18);
+  padding: .5rem 1rem;
+  width: max-content;
+  font-size: .8rem;
+  pointer-events: none;
+}
+
+section + div.clicks-allowed {
+  background-color: rgb(77, 73, 60);
+  color: white;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+section + div.clicks-allowed:hover {
+  background-color: rgb(194, 188, 176)
+}
