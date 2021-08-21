@@ -1,10 +1,9 @@
 'use strict';
 
-// global variables -----------------------------------------------------------
+// ====================== GLOBAL VARIABLES ======================//
 let allProducts = [];
 // querySelector = method
 let myContainer = document.querySelector('section');
-// let myButton = document.querySelector('section + div');
 let image1 = document.querySelector('section img:first-child');
 let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
@@ -13,7 +12,7 @@ let clicksAllowed = 25;
 let indexArray = [];
 let numberOfUniqueIndexes = 6;
 
-// constructor
+// ====================== CONSTRUCTOR ======================//
 function Products(name, fileExtension = 'jpg') {
   this.name = name;
   this.src = `img/${name}.${fileExtension}`;
@@ -21,16 +20,10 @@ function Products(name, fileExtension = 'jpg') {
   this.clicks = 0;
   allProducts.push(this);
 }
+// display images
 function selectRandomProduct() {
   return Math.floor(Math.random() * allProducts.length);
 }
-// function renderProducts() {
-//   // call the selectRandomProduct
-//   let prod1 = selectRandomProduct();
-//   let prod2 = selectRandomProduct();
-//   let prod3 = selectRandomProduct();
-  // push product values into array
-  // google MDN array has value
 
   //use the .includes 
   // .pop() - removes last item
@@ -50,10 +43,7 @@ let prod1 = indexArray.shift();
 let prod2 = indexArray.shift();
 let prod3 = indexArray.shift();
 
-  // while  (prod1 === prod2 || prod1 === prod3 || prod2 === prod3) {
-  //   prod2 = selectRandomProduct();
-  //   prod3 = selectRandomProduct();
-  // }
+// deleting and adding to the array
   image1.src = allProducts[prod1].src;
   image2.src = allProducts[prod2].src;
   image3.src = allProducts[prod3].src;
@@ -64,6 +54,23 @@ let prod3 = indexArray.shift();
   allProducts[prod2].views++;
   allProducts[prod3].views++;
 }
+// create Local Storage
+function storeToStorage () {
+  let stringifiedProducts = JSON.stringify(allProducts);
+  localStorage.setItem('productStorage', stringifiedProducts);
+}
+
+// check to see if there is a local storage
+function checkLocalStorage () {
+  let potentialProducts = localStorage.getItem('productStorage');
+    if (potentialProducts) {
+      let parsedProducts = JSON.parse(potentialProducts);
+      allProducts = parsedProducts;
+    }
+}
+
+
+// ====================== EVENT HANDLER ======================//
 function handleProductClick(event) {
   if (event.target === myContainer) {
     alert('Please click on an image');
@@ -79,20 +86,15 @@ function handleProductClick(event) {
   }
   renderProducts();
   if (clicks === clicksAllowed) {
-    // myButton.className = 'clicks-allowed';
     myContainer.removeEventListener('click', handleProductClick);
     renderChart();
+    // calling the created storage
+    storeToStorage();
   }
   console.log(indexArray);
 }
-// function renderResults() {
-//   let ul = document.querySelector('ul');
-//   for (let i = 0; i < allProducts.length; i++) {
-//     let li = document.createElement('li')
-//     li.textContent = `${allProducts[i].name} had ${allProducts[i].views} view and was clicked ${allProducts[i].clicks} times.`;
-//     ul.appendChild(li);
-//   }
-// }
+
+// ====================== NEW INSTANCES ======================//
 new Products ('bag');
 new Products ('banana');
 new Products ('bathroom');
@@ -116,10 +118,7 @@ new Products ('wine-glass');
 console.log(allProducts);
 renderProducts();
 
-// myContainer.addEventListener('click', handleProductClick);
-// myButton.addEventListener('click', renderResults);
-
-// Chart -----------------------------------------------------------------------
+// ====================== CHART DATA ======================//
 function renderChart() {
   let productClicks = [];
   let productViews = [];
@@ -165,4 +164,8 @@ let chartObject = {
     let myChart = new Chart(ctx, chartObject);
   }
 
+// ====================== EVENT LISTENER ======================//
 myContainer.addEventListener('click', handleProductClick);
+
+// check local storage - see in applications on server
+checkLocalStorage();
